@@ -1,0 +1,52 @@
+{
+   "name": "semver",
+   "abstract": "A semantic version data type",
+   "description": "Provides a data type the enforces the Semantic Version format and includes support btree and hash indexing.",
+   "version": "0.10.0",
+   "maintainer": [
+      "David E. Wheeler <david@justatheory.com>",
+      "Sam Vilain <sam@vilain.net>"
+   ],
+   "license": "postgresql",
+   "provides": {
+      "semver": {
+         "abstract": "A semantic version data type",
+         "file": "sql/semver.sql",
+         "docfile": "doc/semver.mmd",
+         "version": "0.10.0"
+      }
+   },
+   "prereqs": {
+      "runtime": {
+         "requires": {
+            "PostgreSQL": "8.4.0"
+         }
+      },
+      "test": {
+         "requires": {
+            "plpgsql": 0
+        }
+      }
+   },
+   "resources": {
+      "bugtracker": {
+         "web": "https://github.com/theory/pg-semver/issues/"
+      },
+      "repository": {
+        "url":  "git://github.com/theory/pg-semver.git",
+        "web":  "https://github.com/theory/pg-semver/",
+        "type": "git"
+      }
+   },
+   "generated_by": "David E. Wheeler",
+   "meta-spec": {
+      "version": "1.0.0",
+      "url": "http://pgxn.org/meta/spec.txt"
+   },
+   "tags": [
+      "semantic version",
+      "semver",
+      "version",
+      "version number"
+   ]
+}

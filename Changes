@@ -1,0 +1,93 @@
+Revision history for PostgreSQL extension semver.
+
+0.10.0  2016-05-12T00:28:03Z
+      - Updated extension to support Semantic Versioning 2.0.0, thanks to Tom
+        Davis (PR #13).
+      - Improved error output to mark specific bad character, where possible,
+        thanks to Tom Davis.
+      - BREAKING CHANGE: `semver()` and cast constructors no longer support
+        the semver 1.0.0-beta format format "X.Y.Zpre" (that is, without the
+        dash), since it's not compatible with the semver 2.0.0 spec. Use
+        `to_semver()` to convert it to X.Y.Z-pre", or specify "X.Y.Z-pre"
+        directly.
+
+0.5.0   2014-12-06T00:29:17Z
+      - Fixed issue where the release file could be listed twice when
+        installing, which causes an installation failure on some versions of
+        PostgreSQL.
+      - Fixed a typo in the README: `make installcheck` should be run *after*
+        `make install`.
+      - Fixed an issue where the installer would read the distribution version
+        rather than the extension version. The latter is requierd to tell
+        PostgreSQL the correct version number (since the distribution version
+        is quite different from the extension version).
+      - Added `LICENSE` file to simplify packaging, thanks to Richard Marko,
+        who is packaging semver for Fedora.
+
+0.4.0  2013-06-12T06:48:33Z
+      - Updated the `Makefile` to reflect the recommended patterns from
+        pgsql-hackers. Thanks to Cédric Villemain for the details.
+      - Changed the Makefile to read the distribution name and version from
+        META.json.
+      - Fixed the Makefile to allow `PG_CONFIG=/path/to/pg_config` to actually
+        work.
+      - Fixed an off-by-one bug in the parser that could add garbage
+        characters to the end of certain semvers with patch versions. Thanks
+        to Andrew "RhodiumToad" Gierth for pointing out the bug.
+      - Add a macro to fetch a semver from C function arguments, and cast to
+        `semver*` rather than `void*`. Suggested by Andrew "RhodiumToad"
+        Gierth.
+      - Removed unnecessary calls to `PG_FREE_IF_COPY()`. Only really needed
+        for toastable values, and semvers are not toastable.
+
+0.3.0  2012-11-20T19:04:30Z
+      - Updated the parser to support an optional dash before the prerelease
+        version, and the formatter to always emit a dash for the prerelease
+        version. This brings it in line with the final semver 1.0.0
+        specification. Thanks to Pieter van de Bruggen for making it happen.
+
+0.2.4  2012-11-02T22:32:30Z
+      - Fixed a memory allocation bug that could cause semvers to be displayed
+        with missing or garbage characters. Thanks to Andrew "RhodiumToad"
+        Gierth for help tracking down and fixing the issue.
+
+0.2.3 2011-11-11T06:55:10Z
+      - Fixed the `Makefile` so that the documentation file should properly be
+        found and installed by `PGXS`.
+
+0.2.2   2011-05-12T19:01:41
+      - Tweaked MultiMarkdown table layout in the docuemntation so that the
+        header row is always processed as a header row, rather than a `pre`
+        block.
+      - Simplified the `CREATE EXTENSION` support in the `Makefile`.
+
+0.2.1 2011-04-20T20:37:05
+      - Fixed the metadata file to reflect that the "pair" extension is not
+        included in the semver distribution.
+      - Added abstract and doc file to the `provides` section of `META.json`.
+      - Removed the `NO_PGXS` stuff from `Makefile`, as the PostgreSQL core
+        team does not recommend its use outside of the core contrib
+        extensions.
+      - Added PostgreSQL 9.1 `CREATE EXTENSION` support, including migration
+        from an unpackaged install via `CREATE EXTENSION semver FROM
+        unpackaged`.
+      - Renamed `doc/semver.md` to `doc/semver.mdd`, so that PGXN will parse
+        it as MultiMarkdown. This will allow the tables to be properly
+        formatted.
+      - Removed documentation that semver is implemented as a domain. It
+        hasn't been since 0.2.0.
+      - Removed Unicode characters `psql` output in the documentation.
+
+0.2.0 2011-02-05T19:32:49
+      - Converted to a native type implemented in C by Sam Vilain. While David
+        was at lunch, no less.
+      - As a consequence, `USING` is no longer required in an `ORDER BY`
+        clause to get proper semver sort ordering.
+      - Added casts from nuermic types.
+      - Renamed `clean_semver()` to `to_semver()`.
+
+0.1.0  2010-10-07 18:31:43
+      - Initial version.
+      - Implementation in pure PL/pgSQL.
+      - Included in [PGXN Manager](https://github.com/theory/pgxn-manager).
+      - Not otherwise released.
