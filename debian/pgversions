@@ -1,0 +1,3 @@
+# 8.4 doesn't compile
+# we include 9.0 here even if it doesn't have extensions, the .sql file is still present in the packages
+9.0+

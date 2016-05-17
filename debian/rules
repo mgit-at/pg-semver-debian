@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+
+# Rebuild debian/control from debian/control.in
+SRCDIR = $(CURDIR)
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+clean: debian/control
+.PHONY: debian/control
+
+SUPPORTED_VERSIONS = $(shell pg_buildext supported-versions)
+
+DH_INSTALL_FILES = $(basename $(wildcard debian/*.install.in))
+
+# Use debhelper's dh
+%:
+	dh $@
+
+override_dh_auto_configure:
+	set -e; for v in $(SUPPORTED_VERSIONS); do \
+		mkdir debian/build-$$v; \
+	  cp -r src debian/build-$$v; \
+	  cp -r sql debian/build-$$v; \
+	  cp -r doc debian/build-$$v; \
+	  cp META.json Makefile semver.control debian/build-$$v; \
+	done
+
+override_dh_auto_build:
+	set -e; for v in $(SUPPORTED_VERSIONS); do \
+	  $(MAKE) -C debian/build-$$v PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config all; \
+	done
+
+override_dh_auto_clean:
+	set -e; for v in $(SUPPORTED_VERSIONS); do \
+	  dh_auto_clean --builddirectory=debian/build-$$v; \
+	  rm -rf debian/install-$$v; \
+          for file in debian/*PGVERSION*; do \
+	    sed -e "s:PGVERSION:$$v:g" "$$file" > "$$(echo "$$file" | sed -e "s:PGVERSION:$$v:g")"; \
+	  done; \
+	done
+
+override_dh_auto_install:
+	set -e; for v in $(SUPPORTED_VERSIONS); do \
+	  $(MAKE) -C debian/build-$$v DESTDIR=$(CURDIR)/debian/install-$$v install; \
+	done
+
+override_dh_installchangelogs:
+	dh_installchangelogs Changes
+
+override_dh_installdocs:
+	dh_installdocs --all README.md doc/semver.mmd
+
+.PHONY: override_dh_auto_configure override_dh_auto_clean override_dh_auto_build override_dh_auto_install override_dh_installchangelogs override_dh_installdocs

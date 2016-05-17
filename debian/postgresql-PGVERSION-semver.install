@@ -1,0 +1,2 @@
+debian/install-PGVERSION/usr/lib/postgresql/PGVERSION/lib/semver.so  usr/lib/postgresql/PGVERSION/lib
+debian/install-PGVERSION/usr/share/postgresql                        usr/share

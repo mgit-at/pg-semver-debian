@@ -1,0 +1,5 @@
+postgresql-semver (0.10.0-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Christian Pointner <equinox@spreadspace.org>  Tue, 17 May 2016 15:34:30 +0200

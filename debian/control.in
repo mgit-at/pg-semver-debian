@@ -1,0 +1,14 @@
+Source: postgresql-semver
+Section: database
+Priority: extra
+Maintainer: Christian Pointner <cpointner@mgit.at>
+Build-Depends: debhelper (>= 9), postgresql-server-dev-all
+Standards-Version: 3.9.5
+
+Package: postgresql-PGVERSION-semver
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, postgresql-PGVERSION
+Description: Semantic Versioning type for PostgreSQL
+  This library contains a single PostgreSQL extension, a data type called "semver".
+  It's an implementation of the version number format specified by the Semantic
+  Versioning 2.0.0 Specification (http://semver.org/spec/v2.0.0.html).
