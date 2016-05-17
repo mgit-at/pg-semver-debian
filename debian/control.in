@@ -9,6 +9,8 @@ Package: postgresql-PGVERSION-semver
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, postgresql-PGVERSION
 Description: Semantic Versioning type for PostgreSQL
-  This library contains a single PostgreSQL extension, a data type called "semver".
-  It's an implementation of the version number format specified by the Semantic
-  Versioning 2.0.0 Specification (http://semver.org/spec/v2.0.0.html).
+ This library contains a single PostgreSQL extension, a data type called
+ "semver". It's an implementation of the version number format specified
+ by the Semantic Versioning 2.0.0 Specification.
+ .
+ http://semver.org/spec/v2.0.0.html
